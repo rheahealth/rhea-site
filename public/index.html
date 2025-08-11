@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhea Health — Carrier Screening</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Rhea Health</h1>
+    <p>Plan your pregnancy with confidence</p>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>About</h2>
+      <p>
+        We offer preconception carrier screening to help couples understand
+        inherited genetic risks before starting a family.
+      </p>
+    </section>
+
+    <section>
+      <h2>How It Works</h2>
+      <ol>
+        <li>Order your test online</li>
+        <li>Provide a saliva sample</li>
+        <li>Receive results with expert genetic counseling</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Get Notified</h2>
+      <form name="lead" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="lead">
+        <p style="display:none">
+          <label>Don’t fill this out: <input name="bot-field"></label>
+        </p>
+        <p>
+          <label>Name:<br><input type="text" name="name" required></label>
+        </p>
+        <p>
+          <label>Email:<br><input type="email" name="email" required></label>
+        </p>
+        <p>
+          <button type="submit" class="btn">Notify Me</button>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>&copy; <span id="year"></span> Rhea Health. All rights reserved.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
