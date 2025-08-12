@@ -1,39 +1,115 @@
 /* MVP base styles */
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  line-height: 1.6;
-  background-color: #f9f9f9;
-  color: #333;
+  color: #2d2d2d;
+  background-color: #F7F4ED;
+  padding-top: 100px;
 }
 
-h1, h2 {
-  color: #0055a5; /* Rhea blue */
+header {
+  background-color: #F7F4ED;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 0;
 }
 
-p {
-  max-width: 600px;
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
 }
 
-.container {
-  width: 90%;
-  max-width: 1000px;
-  margin: auto;
-  padding: 2rem 0;
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-button, .btn {
-  background-color: #ff7a00; /* Rhea orange */
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
+.logo img {
+  height: 90px;
+  margin-right: 10px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+nav a {
+  margin-left: 1.5rem;
   text-decoration: none;
-  display: inline-block;
+  color: #555;
+  font-weight: 500;
 }
 
-button:hover, .btn:hover {
-  background-color: #e96d00;
+.hero {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(to bottom right, #e3f2fd, #fce4ec);
+}
+
+.hero h2 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.125rem;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.hero button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #5e72e4;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.section {
+  padding: 3rem 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+.section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.step {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.875rem;
+  color: #777;
 }

@@ -3,60 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rhea Health — Carrier Screening</title>
-  <link rel="stylesheet" href="css/main.css" />
+  <title>MyRheaHealth - Preconception Genetic Screening</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <header class="container">
-    <h1>Rhea Health</h1>
-    <p>Plan your pregnancy with confidence</p>
-  </header>
+  <!-- Include header -->
+  <div id="header-placeholder"></div>
 
-  <main class="container">
-    <section>
-      <h2>About</h2>
-      <p>
-        We offer preconception carrier screening to help couples understand
-        inherited genetic risks before starting a family.
-      </p>
-    </section>
+  <section class="hero">
+    <h2>Genetic Insights Before You Start Your Family</h2>
+    <p>Rhea Health offers comprehensive carrier screening for 80 high-impact, mostly untreatable genetic conditions—empowering you with knowledge and choices.</p>
+    <div class="tagline">Empowering tomorrow's families</div>
+    <button onclick="location.href='#screening'">Get Screened</button>
+  </section>
 
-    <section>
-      <h2>How It Works</h2>
-      <ol>
-        <li>Order your test online</li>
-        <li>Provide a saliva sample</li>
-        <li>Receive results with expert genetic counseling</li>
-      </ol>
-    </section>
+  <section id="how" class="section">
+    <h3>How It Works</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>1. Easy Sample Collection</strong>
+        <p>Choose between saliva or blood collection—both are painless and quick.</p>
+      </div>
+      <div class="step">
+        <strong>2. Advanced Genetic Analysis</strong>
+        <p>Your sample is analyzed in certified labs using high-resolution genomic technology.</p>
+      </div>
+      <div class="step">
+        <strong>3. Clear, Actionable Results</strong>
+        <p>Receive a report with insights and options, guided by certified genetic counselors.</p>
+      </div>
+    </div>
+  </section>
 
-    <section>
-      <h2>Get Notified</h2>
-      <form name="lead" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="lead">
-        <p style="display:none">
-          <label>Don’t fill this out: <input name="bot-field"></label>
-        </p>
-        <p>
-          <label>Name:<br><input type="text" name="name" required></label>
-        </p>
-        <p>
-          <label>Email:<br><input type="email" name="email" required></label>
-        </p>
-        <p>
-          <button type="submit" class="btn">Notify Me</button>
-        </p>
-      </form>
-    </section>
-  </main>
+  <section id="about" class="section">
+    <h3>Backed by World-Class Science</h3>
+    <p>Rhea Health is developed by researchers from Duke-NUS, A*STAR, and KK Women’s and Children’s Hospital—leaders in genetic science and reproductive health.</p>
+  </section>
 
-  <footer class="container">
-    <p>&copy; <span id="year"></span> Rhea Health. All rights reserved.</p>
-  </footer>
+  <section id="faq" class="section">
+    <h3>Frequently Asked Questions</h3>
+    <div class="steps">
+      <div class="step">
+        <strong>What is carrier screening?</strong>
+        <p>Carrier screening checks if you carry genes that could affect your child’s health if both partners carry the same condition.</p>
+      </div>
+      <div class="step">
+        <strong>When should I get screened?</strong>
+        <p>Ideally before pregnancy, to allow time for informed decision-making and options.</p>
+      </div>
+      <div class="step">
+        <strong>How accurate are the results?</strong>
+        <p>Our technology provides high-resolution results with clinical-grade accuracy.</p>
+      </div>
+    </div>
+  </section>
 
-  <script src="js/main.js"></script>
+  <section id="screening" class="section">
+    <h3>Get Screened</h3>
+    <p>Ready to take the next step? Begin your screening today or contact us to learn more about what’s right for you.</p>
+    <button onclick="alert('Screening portal coming soon!')">Start Screening</button>
+  </section>
+
+  <!-- Include footer -->
+  <div id="footer-placeholder"></div>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Dynamically load header and footer
+    async function loadComponents() {
+      document.getElementById('header-placeholder').innerHTML = await fetch('header.html').then(res => res.text());
+      document.getElementById('footer-placeholder').innerHTML = await fetch('footer.html').then(res => res.text());
+    }
+    loadComponents();
   </script>
 </body>
 </html>
