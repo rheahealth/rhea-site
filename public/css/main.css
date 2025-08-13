@@ -84,7 +84,7 @@ nav a {
 }
 
 .section {
-  padding: 3rem 2rem;
+  padding: 2rem 1.5rem;
   max-width: 900px;
   margin: auto;
 }
@@ -101,10 +101,20 @@ nav a {
 }
 
 .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.step i {
+  margin-bottom: 0.5rem;
+  color: #5e72e4;
 }
 
 footer {
@@ -112,4 +122,113 @@ footer {
   padding: 2rem;
   font-size: 0.875rem;
   color: #777;
+}
+
+.team {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  flex: 1;
+  max-width: 30%;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.team-member img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.team-member h3 {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.team-member p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+section {
+  scroll-margin-top: 100px; /* Offset for fixed header height */
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 200px; /* Adjust based on content size */
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
+.accordion-header i {
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  color: #5e72e4;
+}
+
+.accordion-header strong {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.accordion-header:hover {
+  background-color: #f1f1f1;
+}
+
+.accordion-content p {
+  padding: 1rem;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+}
+
+@media (max-width: 768px) {
+  .accordion-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .accordion-header i.toggle-icon {
+    align-self: flex-end;
+  }
 }

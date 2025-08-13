@@ -6,6 +6,7 @@
   <title>MyRheaHealth - Preconception Genetic Screening</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <!-- Include header -->
@@ -22,14 +23,17 @@
     <h3>How It Works</h3>
     <div class="steps">
       <div class="step">
+        <i class="fas fa-vial fa-2x" style="color: #5e72e4;"></i>
         <strong>1. Easy Sample Collection</strong>
         <p>Choose between saliva or blood collection—both are painless and quick.</p>
       </div>
       <div class="step">
+        <i class="fas fa-dna fa-2x" style="color: #5e72e4;"></i>
         <strong>2. Advanced Genetic Analysis</strong>
         <p>Your sample is analyzed in certified labs using high-resolution genomic technology.</p>
       </div>
       <div class="step">
+        <i class="fas fa-file-medical fa-2x" style="color: #5e72e4;"></i>
         <strong>3. Clear, Actionable Results</strong>
         <p>Receive a report with insights and options, guided by certified genetic counselors.</p>
       </div>
@@ -43,18 +47,36 @@
 
   <section id="faq" class="section">
     <h3>Frequently Asked Questions</h3>
-    <div class="steps">
-      <div class="step">
-        <strong>What is carrier screening?</strong>
-        <p>Carrier screening checks if you carry genes that could affect your child’s health if both partners carry the same condition.</p>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <i class="fas fa-question-circle"></i>
+          <strong>What is carrier screening?</strong>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Carrier screening checks if you carry genes that could affect your child’s health if both partners carry the same condition.</p>
+        </div>
       </div>
-      <div class="step">
-        <strong>When should I get screened?</strong>
-        <p>Ideally before pregnancy, to allow time for informed decision-making and options.</p>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <i class="fas fa-question-circle"></i>
+          <strong>When should I get screened?</strong>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Ideally before pregnancy, to allow time for informed decision-making and options.</p>
+        </div>
       </div>
-      <div class="step">
-        <strong>How accurate are the results?</strong>
-        <p>Our technology provides high-resolution results with clinical-grade accuracy.</p>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <i class="fas fa-question-circle"></i>
+          <strong>How accurate are the results?</strong>
+          <i class="fas fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Our technology provides high-resolution results with clinical-grade accuracy.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -75,6 +97,36 @@
       document.getElementById('footer-placeholder').innerHTML = await fetch('footer.html').then(res => res.text());
     }
     loadComponents();
+
+    // Accordion functionality
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const accordionItem = header.parentElement;
+        const content = accordionItem.querySelector('.accordion-content');
+        const toggleIcon = header.querySelector('.toggle-icon');
+
+        // Collapse all other accordion items
+        document.querySelectorAll('.accordion-item').forEach(item => {
+          if (item !== accordionItem) {
+            item.classList.remove('active');
+            item.querySelector('.accordion-content').style.maxHeight = null;
+            item.querySelector('.toggle-icon').classList.replace('fa-chevron-up', 'fa-chevron-down');
+          }
+        });
+
+        // Toggle active class for the clicked item
+        accordionItem.classList.toggle('active');
+
+        // Expand or collapse content
+        if (accordionItem.classList.contains('active')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          toggleIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+        } else {
+          content.style.maxHeight = null;
+          toggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        }
+      });
+    });
   </script>
 </body>
 </html>
