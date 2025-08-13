@@ -1,4 +1,4 @@
-W<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +6,7 @@ W<!DOCTYPE html>
   <title>For Clinicians - Rhea Health</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <!-- Include header -->
@@ -43,13 +44,6 @@ W<!DOCTYPE html>
   <!-- Include footer -->
   <div id="footer-placeholder"></div>
 
-  <script>
-    // Dynamically load header and footer
-    async function loadComponents() {
-      document.getElementById('header-placeholder').innerHTML = await fetch('header.html').then(res => res.text());
-      document.getElementById('footer-placeholder').innerHTML = await fetch('footer.html').then(res => res.text());
-    }
-    loadComponents();
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>

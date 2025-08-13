@@ -90,43 +90,6 @@
   <!-- Include footer -->
   <div id="footer-placeholder"></div>
 
-  <script>
-    // Dynamically load header and footer
-    async function loadComponents() {
-      document.getElementById('header-placeholder').innerHTML = await fetch('header.html').then(res => res.text());
-      document.getElementById('footer-placeholder').innerHTML = await fetch('footer.html').then(res => res.text());
-    }
-    loadComponents();
-
-    // Accordion functionality
-    document.querySelectorAll('.accordion-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const accordionItem = header.parentElement;
-        const content = accordionItem.querySelector('.accordion-content');
-        const toggleIcon = header.querySelector('.toggle-icon');
-
-        // Collapse all other accordion items
-        document.querySelectorAll('.accordion-item').forEach(item => {
-          if (item !== accordionItem) {
-            item.classList.remove('active');
-            item.querySelector('.accordion-content').style.maxHeight = null;
-            item.querySelector('.toggle-icon').classList.replace('fa-chevron-up', 'fa-chevron-down');
-          }
-        });
-
-        // Toggle active class for the clicked item
-        accordionItem.classList.toggle('active');
-
-        // Expand or collapse content
-        if (accordionItem.classList.contains('active')) {
-          content.style.maxHeight = content.scrollHeight + 'px';
-          toggleIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-        } else {
-          content.style.maxHeight = null;
-          toggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-        }
-      });
-    });
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
