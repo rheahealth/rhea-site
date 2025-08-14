@@ -281,4 +281,19 @@ section {
   .dropdown-menu {
     display: flex;
   }
+
+  .team-members {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .team-member {
+    max-width: 90%;
+    margin-bottom: 1.5rem;
+  }
+
+  .team-member img {
+    width: 100px;
+    height: 100px;
+  }
 }
