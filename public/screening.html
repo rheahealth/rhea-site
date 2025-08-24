@@ -114,7 +114,7 @@
           if (!resp.ok) throw new Error('Network response was not ok');
           msg.textContent = 'Thanks — we\'ll be in touch.';
           // Optionally redirect to a thank-you page
-          setTimeout(()=>{ window.location.href = '/thank-you.html'; }, 900);
+          //setTimeout(()=>{ window.location.href = '/thank-you.html'; }, 900);
         } catch(err) {
           console.error(err);
           msg.textContent = 'Submission failed — please try again.';
