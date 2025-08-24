@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Start Your Screening - Rhea Health</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="section">
+    <section class="team">
+      <h2>Start Your Screening Journey</h2>
+      <p>Please provide the details below and we'll follow up with next steps. We only ask what's necessary — you can always provide more information later.</p>
+
+      <form id="lead-form" class="lead-form" method="post" action="/api/lead">
+        <div class="fields">
+          <input type="email" name="email" placeholder="Email address" required>
+          <input type="text" name="first_name" placeholder="First name (optional)">
+        </div>
+
+        <div class="fields" style="margin-top:.5rem;">
+          <input type="tel" name="phone" placeholder="Phone (optional)">
+          <select name="planning_timeframe" aria-label="Planning timeframe">
+            <option value="">Planning timeframe (optional)</option>
+            <option value="trying_now">Trying now</option>
+            <option value="0_6_months">0–6 months</option>
+            <option value="6_12_months">6–12 months</option>
+            <option value=">12_months">>12 months</option>
+          </select>
+        </div>
+
+        <label class="consent" style="margin-top:.5rem; display:block;">
+          <input type="checkbox" name="consent" required> I agree to receive emails from Rhea Health and have read the <a href="/privacy.html">Privacy Policy</a>.
+        </label>
+
+        <div style="margin-top:.5rem; font-size:.9rem; color:var(--muted);">
+          We will only use your information to contact you about screening and will not sell your data. You can unsubscribe at any time.
+        </div>
+
+        <div style="margin-top:1rem; display:flex; gap:.5rem; align-items:center;">
+          <button type="submit">Get Started</button>
+          <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
+        </div>
+
+        <!-- Hidden fields for tracking, filled by JS -->
+        <input type="hidden" name="page" value="">
+        <input type="hidden" name="referrer" value="">
+        <input type="hidden" name="utm_source" value="">
+        <input type="hidden" name="utm_medium" value="">
+        <input type="hidden" name="utm_campaign" value="">
+      </form>
+
+      <hr style="margin:1.5rem 0; border:none; border-top:1px solid var(--border);">
+
+      <h3>Why we ask for this</h3>
+      <p style="color:var(--muted);">Email is required so we can send you instructions and results. A first name helps us personalise communications. Phone is optional and only used if you'd like a call. Consent is required for marketing; if you only want transactional emails, leave the checkbox unchecked and note that in the message.</p>
+
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    // load header/footer like other pages
+    (async function loadComponents(){
+      const h = document.getElementById('header-placeholder');
+      const f = document.getElementById('footer-placeholder');
+      if (h) h.innerHTML = await fetch('header.html').then(r=>r.text());
+      if (f) f.innerHTML = await fetch('footer.html').then(r=>r.text());
+    })();
+
+    // Lead form submission: POST to your edge function or Netlify function at /api/lead
+    (function(){
+      const form = document.getElementById('lead-form');
+      const msg = document.getElementById('lead-msg');
+      if (!form) return;
+
+      // populate hidden fields
+      function populateTracking() {
+        const params = new URLSearchParams(location.search);
+        form.querySelector('input[name="page"]').value = location.pathname + location.hash;
+        form.querySelector('input[name="referrer"]').value = document.referrer || '';
+        form.querySelector('input[name="utm_source"]').value = params.get('utm_source') || '';
+        form.querySelector('input[name="utm_medium"]').value = params.get('utm_medium') || '';
+        form.querySelector('input[name="utm_campaign"]').value = params.get('utm_campaign') || '';
+      }
+      populateTracking();
+
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        msg.textContent = '';
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+
+        const data = Object.fromEntries(new FormData(form).entries());
+
+        // Basic client validation
+        if (!data.email) {
+          msg.textContent = 'Please enter a valid email.';
+          submitBtn.disabled = false;
+          return;
+        }
+
+        try {
+          const resp = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          if (!resp.ok) throw new Error('Network response was not ok');
+          msg.textContent = 'Thanks — we\'ll be in touch.';
+          // Optionally redirect to a thank-you page
+          setTimeout(()=>{ window.location.href = '/thank-you.html'; }, 900);
+        } catch(err) {
+          console.error(err);
+          msg.textContent = 'Submission failed — please try again.';
+          submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
