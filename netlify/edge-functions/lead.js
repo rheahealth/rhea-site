@@ -1,25 +1,35 @@
-const fetch = globalThis.fetch || require('node-fetch');
+// netlify/edge-functions/lead.js  (ESM, Deno)
 
-exports.handler = async function(event, context) {
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: { 'Content-Type': 'application/json', Allow: 'POST' },
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
+const json = (obj, status = 200, extraHeaders = {}) =>
+  new Response(JSON.stringify(obj), {
+    status,
+    headers: { "Content-Type": "application/json", ...extraHeaders },
+  });
+
+export default async (request, context) => {
+  // (optional) CORS preflight if browser sends OPTIONS
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "Access-Control-Allow-Origin": context.site?.url || "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
+  }
+
+  if (request.method !== "POST") {
+    return json({ error: "Method not allowed" }, 405, { Allow: "POST" });
   }
 
   let body;
-  try {
-    body = JSON.parse(event.body || '{}');
-  } catch (err) {
-    return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Invalid JSON' }) };
-  }
+  try { body = await request.json(); }
+  catch { return json({ error: "Invalid JSON" }, 400); }
 
-  // basic validation
-  const email = (body.email || '').toString().trim().toLowerCase();
+  const email = (body.email || "").toString().trim().toLowerCase();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { statusCode: 400, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Invalid email' }) };
+    return json({ error: "Invalid email" }, 400);
   }
 
   const payload = {
@@ -27,7 +37,7 @@ exports.handler = async function(event, context) {
     first_name: body.first_name || null,
     phone: body.phone || null,
     planning_timeframe: body.planning_timeframe || null,
-    consent: (body.consent === true) || (body.consent === 'true') || (body.consent === 'on'),
+    consent: body.consent === true || body.consent === "true" || body.consent === "on",
     page: body.page || null,
     referrer: body.referrer || null,
     utm_source: body.utm_source || null,
@@ -35,36 +45,32 @@ exports.handler = async function(event, context) {
     utm_campaign: body.utm_campaign || null,
   };
 
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
+  const SUPABASE_URL = Netlify.env.get("SUPABASE_URL");
+  const SUPABASE_SERVICE_ROLE_KEY = Netlify.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
-    return { statusCode: 500, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Server misconfigured' }) };
+    return json({ error: "Server misconfigured: missing Supabase env" }, 500);
   }
 
-  try {
-    const resp = await fetch(`${SUPABASE_URL.replace(/\/$/, '')}/rest/v1/leads`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        Prefer: 'return=representation'
-      },
-      body: JSON.stringify(payload)
-    });
+  const endpoint = `${SUPABASE_URL.replace(/\/$/, "")}/rest/v1/leads`;
+  const resp = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      apikey: SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+      Prefer: "return=representation",
+    },
+    body: JSON.stringify(payload),
+  });
 
-    const text = await resp.text();
-
-    if (!resp.ok) {
-      console.error('Supabase insert failed', resp.status, text);
-      return { statusCode: 502, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Insert failed', detail: text, status: resp.status }) };
-    }
-
-    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true }) };
-  } catch (err) {
-    console.error('Upstream error', err);
-    return { statusCode: 502, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ error: 'Upstream error', message: err.message }) };
+  const text = await resp.text();
+  if (!resp.ok) {
+    return json({ error: "Supabase insert failed", status: resp.status, detail: safeParse(text) ?? text }, 502);
   }
+
+  return json({ ok: true });
 };
+
+function safeParse(s){ try { return JSON.parse(s); } catch { return null; } }
+
+export const config = { path: "/api/lead" };
