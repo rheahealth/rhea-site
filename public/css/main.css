@@ -84,8 +84,7 @@ nav a:hover::after, nav a:focus-visible::after { width:100%; }
 }
 
 .hero h2,
-.hero p,
-.hero button {
+.hero p {
   max-width:500px;
   position:relative;
   z-index:1;
@@ -110,16 +109,8 @@ nav a:hover::after, nav a:focus-visible::after { width:100%; }
 
 .tagline { font-size:1rem; color:#666; margin-bottom:2rem; }
 
-.hero button {
-  padding:.75rem 1.5rem;
-  font-size:1rem;
-  border:0;
-  background-color:var(--brand);
-  color:#fff;
-  border-radius:6px;
-  cursor:pointer;
-}
-.hero button:hover { background-color:var(--brand-hover); }
+.hero button { cursor:pointer; }
+.hero .btn { margin-top:.25rem; }
 
 /* Sections */
 .section { padding:2rem 1.5rem; max-width:900px; margin:auto; }
@@ -139,6 +130,48 @@ nav a:hover::after, nav a:focus-visible::after { width:100%; }
 .step i { margin-bottom:.5rem; color:var(--brand); }
 
 footer { text-align:center; padding:2rem; font-size:.875rem; color:#777; }
+
+/* Buttons – shared styles */
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  font-weight:600;
+  font-size:1rem;
+  line-height:1.2;
+  padding:.7rem 1.1rem;
+  border-radius:8px;
+  border:1px solid transparent;
+  text-decoration:none;
+  cursor:pointer;
+  box-shadow:0 1px 0 rgba(16,24,40,.04), 0 1px 2px rgba(16,24,40,.12);
+  transition:background-color .15s ease, color .15s ease, box-shadow .15s ease, transform .02s ease;
+}
+.btn:active { transform:translateY(.5px); }
+.btn:focus-visible { outline:3px solid color-mix(in oklab, var(--brand) 35%, transparent); outline-offset:2px; }
+
+.btn-primary {
+  background:var(--brand);
+  color:#fff;
+}
+.btn-primary:hover { background:var(--brand-hover); }
+
+.btn-secondary {
+  background:#eef2ff;
+  color:var(--brand);
+  border-color:#dfe4ff;
+}
+.btn-secondary:hover { background:#e3e9ff; }
+
+.btn-ghost {
+  background:transparent;
+  color:var(--brand);
+}
+.btn-ghost:hover { background:rgba(94,114,228,.08); }
+
+.btn-lg { padding:.8rem 1.25rem; font-size:1rem; }
+.btn-block { width:100%; }
 
 /* Team */
 .team {
