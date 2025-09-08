@@ -49,6 +49,49 @@ export default async (request, context) => {
     return json({ error: "Invalid email" }, 400);
   }
 
+  // Verify Cloudflare Turnstile token
+  const token = body["cf-turnstile-response"] || body["cf_turnstile_response"] || "";
+  if (!token) {
+    return json({ error: "Missing verification token" }, 400, cors);
+  }
+  const TURNSTILE_SECRET_KEY = Netlify.env.get("TURNSTILE_SECRET_KEY");
+  if (!TURNSTILE_SECRET_KEY) {
+    return json({ error: "Server misconfigured: missing TURNSTILE_SECRET_KEY" }, 500, cors);
+  }
+  try {
+    const remoteip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim();
+    const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: TURNSTILE_SECRET_KEY,
+        response: token,
+        ...(remoteip ? { remoteip } : {}),
+      }),
+    });
+    const verifyData = await verifyResp.json().catch(() => ({ success: false }));
+    if (!verifyResp.ok || !verifyData.success) {
+      return json({ error: "Verification failed", detail: verifyData }, 400, cors);
+    }
+    // Hostname check to reduce abuse (must be present and match)
+    const verifiedHost = (verifyData.hostname || "").toLowerCase();
+    const allowedExact = new Set([
+      "myrheahealth.com",
+      "www.myrheahealth.com",
+      "localhost",
+      "127.0.0.1",
+      "::1",
+    ]);
+    const allowedSuffixes = [".netlify.app", ".netlify.live"]; // deploy previews and branch subdomains
+    const isAllowed = (h) =>
+      allowedExact.has(h) || allowedSuffixes.some(sfx => h.endsWith(sfx));
+    if (!verifiedHost || !isAllowed(verifiedHost)) {
+      return json({ error: "Invalid verification host", hostname: verifiedHost || null }, 400, cors);
+    }
+  } catch (e) {
+    return json({ error: "Verification error", detail: String(e) }, 502, cors);
+  }
+
   const payload = {
     email,
     first_name: body.first_name || null,

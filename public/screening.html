@@ -6,6 +6,7 @@
   <title>Start Your Screening - Rhea Health</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -40,7 +41,8 @@
           We will only use your information to contact you about screening and will not sell your data. You can unsubscribe at any time.
         </div>
 
-        <div style="margin-top:1rem; display:flex; gap:.5rem; align-items:center;">
+        <div style="margin-top:1rem; display:flex; gap:.5rem; align-items:center; flex-wrap: wrap;">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAABz6lSujAk1FM-sC" style="min-height:65px;"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
@@ -104,6 +106,12 @@
           submitBtn.disabled = false;
           return;
         }
+        // Ensure Turnstile token present
+        if (!data['cf-turnstile-response']) {
+          msg.textContent = 'Please complete the verification.';
+          submitBtn.disabled = false;
+          return;
+        }
 
         try {
           const resp = await fetch('/api/lead', {
@@ -128,6 +136,7 @@
         msg.textContent = ''; // Clear the message
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = false; // Re-enable the submit button
+        try { if (window.turnstile) window.turnstile.reset(); } catch {}
       });
     })();
   </script>
