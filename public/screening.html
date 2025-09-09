@@ -22,26 +22,36 @@
           <input type="text" name="first_name" placeholder="First name (optional)">
         </div>
 
-        <div class="fields" style="margin-top:.5rem;">
+        <div class="fields">
           <input type="tel" name="phone" placeholder="Phone (optional)">
           <select name="planning_timeframe" aria-label="Planning timeframe">
             <option value="">Planning timeframe (optional)</option>
             <option value="trying_now">Trying now</option>
             <option value="0_6_months">0–6 months</option>
             <option value="6_12_months">6–12 months</option>
-            <option value="gt_12_months">>12 months</option>
+            <option value="gt_12_months">&gt;12 months</option>
           </select>
         </div>
 
-        <label class="consent" style="margin-top:.5rem; display:block;">
-          <input type="checkbox" name="consent"> I’d like to receive occasional updates from Rhea Health and have read the <a href="/privacy.html">Privacy Policy</a>.
-        </label>
-
-        <div style="margin-top:.5rem; font-size:.9rem; color:var(--muted);">
-          We will only use your information to contact you about screening and will not sell your data. You can unsubscribe at any time.
+        <div class="privacy-note" role="note">
+          <strong>PDPA Notice:</strong> By submitting this form, you acknowledge that Rhea Health will collect, use and disclose your personal data provided here for the purposes of responding to your enquiry, providing screening-related information, arranging services and associated administration, in accordance with our <a href="privacy.html" target="_blank" rel="noopener">Privacy Notice</a>.
         </div>
 
-        <div style="margin-top:1rem; display:flex; gap:.5rem; align-items:center; flex-wrap: wrap;">
+        <label class="checkbox-row">
+          <input type="checkbox" name="pdpa_ack" required>
+          <span>I have read the Privacy Notice and consent to the collection, use and disclosure of my personal data for the purposes stated above.</span>
+        </label>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="consent">
+          <span>I agree to receive occasional updates from Rhea Health via email (optional).</span>
+        </label>
+
+        <div class="privacy-hint">
+          Email is required to process your request and share screening instructions/results; other fields are optional. We do not send marketing SMS/calls unless you have given express consent. You may withdraw your consent at any time as described in the Privacy Notice.
+        </div>
+
+        <div class="actions">
           <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAABz6lSujAk1FM-sC" data-size="invisible" data-callback="tsCallback" data-error-callback="tsError" data-expired-callback="tsExpired"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
@@ -57,11 +67,6 @@
         <!-- Turnstile token (invisible mode sets via callback)-->
         <input type="hidden" name="cf-turnstile-response" value="">
       </form>
-
-      <hr style="margin:1.5rem 0; border:none; border-top:1px solid var(--border);">
-
-      <h3>Why we ask for this</h3>
-      <p style="color:var(--muted);">Email is required so we can send you instructions and results. A first name helps us personalise communications. Phone is optional and only used if you'd like a call. Marketing consent is optional; you can proceed without it and will still receive transactional emails about your request.</p>
 
     </section>
   </main>
@@ -109,6 +114,13 @@
         msg.textContent = '';
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
+
+        // Enforce native required fields (e.g., PDPA checkbox)
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          submitBtn.disabled = false;
+          return;
+        }
 
         let data = Object.fromEntries(new FormData(form).entries());
 

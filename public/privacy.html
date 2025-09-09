@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Notice - Rhea Health</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="section">
+    <section class="team">
+      <h2>Privacy Notice</h2>
+      <p>Rhea Health respects your privacy and is committed to protecting your personal data in line with the Singapore Personal Data Protection Act (PDPA).</p>
+
+      <h3>What we collect</h3>
+      <p>We may collect your contact details (e.g., name, email, phone) and information relevant to preconception genetic screening.</p>
+
+      <h3>Required vs optional</h3>
+      <p>
+        - Email: required to process your request and share screening instructions/results.<br>
+        - First name: optional, used to personalise communications.<br>
+        - Phone: optional, used only if you request a call-back or for service coordination.<br>
+        - Marketing email consent: optional — you will still receive transactional messages related to your request without it.
+      </p>
+
+      <h3>How we use your data</h3>
+      <p>We use your data to: (a) respond to your enquiry; (b) provide screening-related information; (c) arrange and administer requested services; and (d) conduct service improvements and operations. We will not sell your data.</p>
+
+      <h3>Marketing communications</h3>
+      <p>We only send marketing communications with your consent. You may withdraw consent at any time by following unsubscribe options in our emails or contacting us as described below. We do not send marketing SMS/calls without your express consent and we comply with applicable Do Not Call provisions.</p>
+
+      <h3>Retention</h3>
+      <p>We retain personal data only as long as necessary for the purposes stated or as required by law, after which we will delete or anonymise it.</p>
+
+      <h3>Access, correction, and withdrawal</h3>
+      <p>You may request access to or correction of your personal data, or withdraw your consent, by contacting us. We will respond in accordance with the PDPA.</p>
+
+      <h3>Contact</h3>
+      <p>For privacy matters, please contact our Data Protection contact at <a href="mailto:privacy@myrheahealth.com">privacy@myrheahealth.com</a>.</p>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    (async function loadComponents(){
+      const h = document.getElementById('header-placeholder');
+      const f = document.getElementById('footer-placeholder');
+      if (h) h.innerHTML = await fetch('header.html').then(r=>r.text());
+      if (f) f.innerHTML = await fetch('footer.html').then(r=>r.text());
+    })();
+  </script>
+</body>
+</html>
