@@ -111,24 +111,16 @@
       // Called by Turnstile API once it loads (see script onload param)
       window.tsOnload = function(){
         try {
-          // Render explicitly to ensure widget exists before execute()
+          // Render Turnstile widget with a valid size
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'invisible', // Switch to invisible mode
+            size: 'compact', // Compact widget for fallback visibility
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
           });
         } catch (e) {
-          // Fallback to compact mode if invisible mode fails
-          console.error('Invisible mode failed, falling back to compact mode', e);
-          tsWidgetId = turnstile.render('#turnstile-widget', {
-            sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'compact',
-            callback: function(token){ window.tsCallback(token); },
-            'error-callback': function(){ window.tsError(); },
-            'expired-callback': function(){ window.tsExpired(); },
-          });
+          console.error('Failed to render Turnstile widget', e);
         }
       };
 
@@ -163,37 +155,15 @@
 
         let data = Object.fromEntries(new FormData(form).entries());
 
-        // Basic client validation
-        if (!data.email) {
-          msg.textContent = 'Please enter a valid email.';
-          submitBtn.disabled = false;
-          return;
-        }
-
-        // Ensure Turnstile token present; if missing, execute compact verification
+        // Ensure Turnstile token present; if missing, execute widget
         if (!data['cf-turnstile-response']) {
-          const ready = await waitForTurnstile();
-          if (!ready) {
-            msg.textContent = 'Verification is loading — please try again.';
-            submitBtn.disabled = false;
-            return;
-          }
           try {
-            await new Promise((resolve) => {
-              tsResolve = resolve;
-              turnstile.execute(tsWidgetId); // Trigger compact verification
-            });
-          } catch {
+            turnstile.execute(tsWidgetId); // Trigger Turnstile execution
+          } catch (err) {
+            console.error('Turnstile execution failed', err);
             msg.textContent = 'Verification failed — please try again.';
             submitBtn.disabled = false;
-            return;
           }
-        }
-
-        // Ensure Turnstile token present
-        if (!data['cf-turnstile-response']) {
-          msg.textContent = 'Verification pending — please try again.';
-          submitBtn.disabled = false;
           return;
         }
 
