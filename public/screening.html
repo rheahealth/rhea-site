@@ -103,7 +103,7 @@
       }
       populateTracking();
 
-      // Turnstile: explicit render + invisible execution when needed
+      // Turnstile: explicit render + compact mode for debugging
       const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
       let tsResolve = null;
       let tsWidgetId = null;
@@ -114,7 +114,7 @@
           // Render explicitly to ensure widget exists before execute()
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'invisible',
+            size: 'compact', // Temporarily use compact mode for debugging
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
@@ -162,7 +162,7 @@
           return;
         }
 
-        // Ensure Turnstile token present; if missing, execute invisible verification
+        // Ensure Turnstile token present; if missing, execute compact verification
         if (!data['cf-turnstile-response']) {
           const ready = await waitForTurnstile();
           if (!ready) {
@@ -173,7 +173,7 @@
           try {
             await new Promise((resolve) => {
               tsResolve = resolve;
-              turnstile.execute(tsWidgetId);
+              turnstile.execute(tsWidgetId); // Trigger compact verification
             });
           } catch {
             msg.textContent = 'Verification failed — please try again.';
