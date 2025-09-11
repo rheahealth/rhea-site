@@ -114,7 +114,7 @@
           // Render explicitly to ensure widget exists before execute()
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'compact',
+            size: 'invisible',
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
@@ -129,24 +129,13 @@
         while (!(window.turnstile && (tsWidgetId !== null))) {
           if (Date.now() - start > timeoutMs) return false;
           await new Promise(r => setTimeout(r, 50));
-          // If API loaded but widget not rendered (e.g., onload missed), try render now
-          if (window.turnstile && tsWidgetId === null) {
-            try {
-              tsWidgetId = turnstile.render('#turnstile-widget', {
-                sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-                size: 'compact',
-                callback: function(token){ window.tsCallback(token); },
-                'error-callback': function(){ window.tsError(); },
-                'expired-callback': function(){ window.tsExpired(); },
-              });
-            } catch {}
-          }
         }
         return true;
       }
       window.tsCallback = function(token){
         tokenInput.value = token || '';
         if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(token); }
+        try { form.requestSubmit(); } catch { form.submit(); }
       };
       window.tsExpired = function(){ tokenInput.value = ''; };
       window.tsError = function(){ tokenInput.value = ''; if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(null); } };
@@ -172,7 +161,8 @@
           submitBtn.disabled = false;
           return;
         }
-        // Ensure Turnstile token present; if missing, ask user to complete compact widget
+
+        // Ensure Turnstile token present; if missing, execute invisible verification
         if (!data['cf-turnstile-response']) {
           const ready = await waitForTurnstile();
           if (!ready) {
@@ -180,15 +170,21 @@
             submitBtn.disabled = false;
             return;
           }
-          msg.textContent = 'Please complete the verification above.';
-          submitBtn.disabled = false;
-          try { document.getElementById('turnstile-widget').scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
-          try { document.getElementById('turnstile-widget').focus(); } catch {}
-          return;
+          try {
+            await new Promise((resolve) => {
+              tsResolve = resolve;
+              turnstile.execute(tsWidgetId);
+            });
+          } catch {
+            msg.textContent = 'Verification failed — please try again.';
+            submitBtn.disabled = false;
+            return;
+          }
         }
+
         // Ensure Turnstile token present
         if (!data['cf-turnstile-response']) {
-          msg.textContent = 'Please complete the verification.';
+          msg.textContent = 'Verification pending — please try again.';
           submitBtn.disabled = false;
           return;
         }
