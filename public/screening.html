@@ -135,7 +135,7 @@
       window.tsCallback = function(token){
         tokenInput.value = token || '';
         if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(token); }
-        try { form.requestSubmit(); } catch { form.submit(); }
+        // Removed automatic form submission to allow manual submission by the user
       };
       window.tsExpired = function(){ tokenInput.value = ''; };
       window.tsError = function(){ tokenInput.value = ''; if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(null); } };
