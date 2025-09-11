@@ -52,7 +52,7 @@
         </div>
 
         <div class="actions">
-          <div id="turnstile-widget" aria-hidden="true"></div>
+          <div id="turnstile-widget" aria-hidden="true" tabindex="-1" style="display:inline-block"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
@@ -110,7 +110,7 @@
           // Render explicitly to ensure widget exists before execute()
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'invisible',
+            size: 'compact',
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
@@ -130,7 +130,7 @@
             try {
               tsWidgetId = turnstile.render('#turnstile-widget', {
                 sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-                size: 'invisible',
+                size: 'compact',
                 callback: function(token){ window.tsCallback(token); },
                 'error-callback': function(){ window.tsError(); },
                 'expired-callback': function(){ window.tsExpired(); },
@@ -168,7 +168,7 @@
           submitBtn.disabled = false;
           return;
         }
-        // Ensure Turnstile token present; if missing, execute invisible widget
+        // Ensure Turnstile token present; if missing, ask user to complete compact widget
         if (!data['cf-turnstile-response']) {
           const ready = await waitForTurnstile();
           if (!ready) {
@@ -176,17 +176,11 @@
             submitBtn.disabled = false;
             return;
           }
-          await new Promise((resolve) => {
-            tsResolve = (tok) => { clearTimeout(failTimer); resolve(tok); };
-            const failTimer = setTimeout(() => { tsResolve = null; resolve(null); }, 15000);
-            try { turnstile.execute(tsWidgetId ?? '#turnstile-widget'); } catch { clearTimeout(failTimer); resolve(null); }
-          });
-          data = Object.fromEntries(new FormData(form).entries());
-          if (!data['cf-turnstile-response']) {
-            msg.textContent = 'Please complete the verification.';
-            submitBtn.disabled = false;
-            return;
-          }
+          msg.textContent = 'Please complete the verification above.';
+          submitBtn.disabled = false;
+          try { document.getElementById('turnstile-widget').scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch {}
+          try { document.getElementById('turnstile-widget').focus(); } catch {}
+          return;
         }
         // Ensure Turnstile token present
         if (!data['cf-turnstile-response']) {
