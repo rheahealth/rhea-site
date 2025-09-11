@@ -52,7 +52,7 @@
         </div>
 
         <div class="actions">
-          <div id="turnstile-widget" aria-hidden="true" style="width:0;height:0;overflow:hidden"></div>
+          <div id="turnstile-widget" aria-hidden="true"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
@@ -111,7 +111,6 @@
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
             size: 'invisible',
-            appearance: 'execute',
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
@@ -132,7 +131,6 @@
               tsWidgetId = turnstile.render('#turnstile-widget', {
                 sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
                 size: 'invisible',
-                appearance: 'execute',
                 callback: function(token){ window.tsCallback(token); },
                 'error-callback': function(){ window.tsError(); },
                 'expired-callback': function(){ window.tsExpired(); },
@@ -179,8 +177,9 @@
             return;
           }
           await new Promise((resolve) => {
-            tsResolve = resolve;
-            try { turnstile.execute(tsWidgetId ?? '#turnstile-widget'); } catch { resolve(null); }
+            tsResolve = (tok) => { clearTimeout(failTimer); resolve(tok); };
+            const failTimer = setTimeout(() => { tsResolve = null; resolve(null); }, 15000);
+            try { turnstile.execute(tsWidgetId ?? '#turnstile-widget'); } catch { clearTimeout(failTimer); resolve(null); }
           });
           data = Object.fromEntries(new FormData(form).entries());
           if (!data['cf-turnstile-response']) {
