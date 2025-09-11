@@ -6,7 +6,7 @@
   <title>Start Your Screening - Rhea Health</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tsOnload" async defer></script>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="actions">
-          <div id="turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAABz6lSujAk1FM-sC" data-size="invisible" data-callback="tsCallback" data-error-callback="tsError" data-expired-callback="tsExpired"></div>
+          <div id="turnstile-widget" aria-hidden="true" style="width:0;height:0;overflow:hidden"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
@@ -99,9 +99,49 @@
       }
       populateTracking();
 
-      // Turnstile invisible callbacks
+      // Turnstile: explicit render + invisible execution when needed
       const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
       let tsResolve = null;
+      let tsWidgetId = null;
+
+      // Called by Turnstile API once it loads (see script onload param)
+      window.tsOnload = function(){
+        try {
+          // Render explicitly to ensure widget exists before execute()
+          tsWidgetId = turnstile.render('#turnstile-widget', {
+            sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
+            size: 'invisible',
+            appearance: 'execute',
+            callback: function(token){ window.tsCallback(token); },
+            'error-callback': function(){ window.tsError(); },
+            'expired-callback': function(){ window.tsExpired(); },
+          });
+        } catch (e) {
+          // no-op; will retry on submit via wait helper
+        }
+      };
+
+      async function waitForTurnstile(timeoutMs = 5000){
+        const start = Date.now();
+        while (!(window.turnstile && (tsWidgetId !== null))) {
+          if (Date.now() - start > timeoutMs) return false;
+          await new Promise(r => setTimeout(r, 50));
+          // If API loaded but widget not rendered (e.g., onload missed), try render now
+          if (window.turnstile && tsWidgetId === null) {
+            try {
+              tsWidgetId = turnstile.render('#turnstile-widget', {
+                sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
+                size: 'invisible',
+                appearance: 'execute',
+                callback: function(token){ window.tsCallback(token); },
+                'error-callback': function(){ window.tsError(); },
+                'expired-callback': function(){ window.tsExpired(); },
+              });
+            } catch {}
+          }
+        }
+        return true;
+      }
       window.tsCallback = function(token){
         tokenInput.value = token || '';
         if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(token); }
@@ -132,7 +172,16 @@
         }
         // Ensure Turnstile token present; if missing, execute invisible widget
         if (!data['cf-turnstile-response']) {
-          await new Promise((resolve) => { tsResolve = resolve; try { turnstile.execute('#turnstile-widget'); } catch { resolve(null); } });
+          const ready = await waitForTurnstile();
+          if (!ready) {
+            msg.textContent = 'Verification is loading — please try again.';
+            submitBtn.disabled = false;
+            return;
+          }
+          await new Promise((resolve) => {
+            tsResolve = resolve;
+            try { turnstile.execute(tsWidgetId ?? '#turnstile-widget'); } catch { resolve(null); }
+          });
           data = Object.fromEntries(new FormData(form).entries());
           if (!data['cf-turnstile-response']) {
             msg.textContent = 'Please complete the verification.';
@@ -170,7 +219,7 @@
         msg.textContent = ''; // Clear the message
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = false; // Re-enable the submit button
-        try { if (window.turnstile) window.turnstile.reset('#turnstile-widget'); } catch {}
+        try { if (window.turnstile) window.turnstile.reset(tsWidgetId ?? '#turnstile-widget'); } catch {}
       });
     })();
   </script>
