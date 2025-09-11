@@ -114,13 +114,21 @@
           // Render explicitly to ensure widget exists before execute()
           tsWidgetId = turnstile.render('#turnstile-widget', {
             sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
-            size: 'compact', // Temporarily use compact mode for debugging
+            size: 'invisible', // Switch to invisible mode
             callback: function(token){ window.tsCallback(token); },
             'error-callback': function(){ window.tsError(); },
             'expired-callback': function(){ window.tsExpired(); },
           });
         } catch (e) {
-          // no-op; will retry on submit via wait helper
+          // Fallback to compact mode if invisible mode fails
+          console.error('Invisible mode failed, falling back to compact mode', e);
+          tsWidgetId = turnstile.render('#turnstile-widget', {
+            sitekey: '0x4AAAAAABz6lSujAk1FM-sC',
+            size: 'compact',
+            callback: function(token){ window.tsCallback(token); },
+            'error-callback': function(){ window.tsError(); },
+            'expired-callback': function(){ window.tsExpired(); },
+          });
         }
       };
 
