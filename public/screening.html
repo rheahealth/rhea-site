@@ -51,8 +51,12 @@
           Email is required to process your request and share screening instructions/results; other fields are optional. We do not send marketing SMS/calls unless you have given express consent. You may withdraw your consent at any time as described in the Privacy Notice.
         </div>
 
+        <div class="verify-row">
+          <label for="turnstile-widget" class="visually-hidden">Human verification</label>
+          <div id="turnstile-widget" aria-hidden="true" tabindex="-1" class="turnstile-mount"></div>
+        </div>
+
         <div class="actions">
-          <div id="turnstile-widget" aria-hidden="true" tabindex="-1" style="display:inline-block"></div>
           <button type="submit" class="btn btn-primary">Get Started</button>
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>

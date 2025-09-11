@@ -358,6 +358,23 @@ section { scroll-margin-top:100px; }
   flex-wrap:wrap;
 }
 
+/* Turnstile placement */
+.verify-row {
+  margin-top:.75rem;
+  margin-bottom:.5rem;
+}
+.turnstile-mount { display:inline-block; }
+
+/* A11y helper */
+.visually-hidden {
+  position:absolute !important;
+  width:1px; height:1px;
+  margin:-1px; padding:0; border:0;
+  clip:rect(0 0 0 0); clip-path:inset(50%);
+  overflow:hidden;
+  white-space:nowrap;
+}
+
 @media (max-width:768px) {
   .lead-form .fields { grid-template-columns: 1fr; }
 }
