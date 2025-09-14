@@ -105,8 +105,14 @@
 
       // Turnstile: explicit render + compact mode for debugging
       const tokenInput = form.querySelector('input[name="cf-turnstile-response"]');
+      const submitBtn = form.querySelector('button[type="submit"]');
       let tsResolve = null;
       let tsWidgetId = null;
+
+      // Disable submit until Turnstile passes
+      function updateSubmitDisabled() {
+        submitBtn.disabled = !tokenInput.value;
+      }
 
       // Called by Turnstile API once it loads (see script onload param)
       window.tsOnload = function(){
@@ -134,22 +140,26 @@
       }
       window.tsCallback = function(token){
         tokenInput.value = token || '';
+        updateSubmitDisabled();
         if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(token); }
         // Removed automatic form submission to allow manual submission by the user
       };
-      window.tsExpired = function(){ tokenInput.value = ''; };
-      window.tsError = function(){ tokenInput.value = ''; if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(null); } };
+      window.tsExpired = function(){ tokenInput.value = ''; updateSubmitDisabled(); };
+      window.tsError = function(){ tokenInput.value = ''; updateSubmitDisabled(); if (typeof tsResolve === 'function') { const r = tsResolve; tsResolve = null; r(null); } };
+
+      // Ensure initial disabled state
+      updateSubmitDisabled();
 
       form.addEventListener('submit', async function(e){
         e.preventDefault();
         msg.textContent = '';
-        const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
 
         // Enforce native required fields (e.g., PDPA checkbox)
         if (!form.checkValidity()) {
           form.reportValidity();
-          submitBtn.disabled = false;
+          // Re-enable only if token already present
+          updateSubmitDisabled();
           return;
         }
 
@@ -180,7 +190,7 @@
         } catch(err) {
           console.error(err);
           msg.textContent = 'Submission failed — please try again.';
-          submitBtn.disabled = false;
+          updateSubmitDisabled();
         }
       });
 
@@ -188,8 +198,7 @@
       document.getElementById('reset-btn').addEventListener('click', () => {
         form.reset(); // Clear all form fields
         msg.textContent = ''; // Clear the message
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = false; // Re-enable the submit button
+        submitBtn.disabled = true; // Keep disabled until Turnstile passes again
         try { if (window.turnstile) window.turnstile.reset(tsWidgetId ?? '#turnstile-widget'); } catch {}
       });
     })();
