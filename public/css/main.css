@@ -66,6 +66,14 @@ nav a::after {
 nav a:hover, nav a:focus-visible { color:var(--brand); }
 nav a:hover::after, nav a:focus-visible::after { width:100%; }
 
+/* Disabled nav link (e.g., Coming soon) */
+nav a.disabled {
+  opacity:.6;
+  cursor:default;
+  pointer-events:none; /* ensure non-interactive */
+}
+nav a.disabled::after { display:none; }
+
 /* Hero */
 .hero {
   position:relative;
