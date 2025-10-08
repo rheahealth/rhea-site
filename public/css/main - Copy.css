@@ -1,35 +1,23 @@
 /* Alt CSS – cleaned but visually identical to original */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&display=swap');
-
 /* Theme variables */
 :root {
   --ink:#2d2d2d;
   --muted:#555;
   --paper:#F7F4ED;
-  --brand:#1FB6A6;
-  --brand-hover:#0077B6 ;
+  --brand:#5e72e4;
+  --brand-hover:#4e63d4;
   --panel:#f9f9f9;
   --border:#ddd;
-  --brand-dark:#002857;   /* For footer backgrounds */
-  --brand-gray:#808080;   /* Dark grey text */
-  --brand-light:#E6E6E6;  /* Light grey background */
 }
 
 /* MVP base */
 body {
-  font-family:'Montserrat', sans-serif;
+  font-family:'Inter',sans-serif;
   margin:0;
   color:var(--ink);
   background-color:var(--paper);
   padding:100px 0 0; /* offset for fixed header */
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight:700; /* Bold */
-}
-h1 {
-  font-weight:900; /* Black */
 }
 
 header {
@@ -112,20 +100,7 @@ nav a.disabled::after { display:none; }
   padding:0;
   border-radius:0;
 }
-
-.hero h2 {
-  margin:0 0 .7 5rem;
-  font-size:clamp(1.75rem, 2vw + 1rem, 2rem); /* ~28px → ~32px */
-  line-height:1.2;
-  font-weight:900; /* Montserrat Black */
-}
-
-.hero p {
-  margin:0 0 1rem;
-  font-size:1.125rem; /* ~18px stays the same */
-  line-height:1.5;
-}
-
+.hero h2 { margin:0 0 .5rem; font-size:2.25rem; }
 .hero p  { margin:0 0 1rem; font-size:1.125rem; }
 
 .hero-card {
@@ -140,12 +115,7 @@ nav a.disabled::after { display:none; }
   box-shadow:0 10px 24px rgba(0,0,0,.08);
 }
 
-.tagline {
-  font-size:.95rem;
-  color: rgba(0,0,0,.6);;
-  margin-top:.5rem;
-  margin-bottom:1.25rem;
-}
+.tagline { font-size:1rem; color:#666; margin-bottom:2rem; }
 
 .hero button { cursor:pointer; }
 .hero .btn { margin-top:.25rem; }
