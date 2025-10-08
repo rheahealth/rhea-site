@@ -91,10 +91,10 @@ nav a.disabled::after { display:none; }
   position:relative;
   padding:clamp(2rem,5vw,4rem);
   color:#1f2937;
-  background-image:url("../images/hero2.png");
+  background-image:url("../images/hero3a.png");
   background-size:cover;
   background-repeat:no-repeat;
-  background-position:20% 20%;
+  background-position:20% 40%;
   min-height:clamp(280px,40vh,420px); /* same as original */
   display:flex;
   flex-direction:column;
@@ -322,7 +322,7 @@ section { scroll-margin-top:100px; }
     content:"";
     display:block;
     height:clamp(280px,40vh,420px); /* match desktop min-height */
-    background-image:url("../images/hero2.png");
+    background-image:url("../images/hero3a.png");
     background-repeat:no-repeat;
     background-size:165%;
     background-position:25% 30%;
