@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Start Your Screening - Rhea Health</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="css/main.css">
@@ -20,19 +19,31 @@
 
       <form id="lead-form" class="lead-form" method="post" action="/api/lead">
         <div class="fields">
-          <input type="email" name="email" placeholder="Email address" required>
-          <input type="text" name="first_name" placeholder="First name (optional)">
+          <div class="field">
+            <label class="field-label" for="lead-email">Email address</label>
+            <input id="lead-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="lead-first-name">First name <span>(optional)</span></label>
+            <input id="lead-first-name" type="text" name="first_name" placeholder="Your first name" autocomplete="given-name">
+          </div>
         </div>
 
         <div class="fields">
-          <input type="tel" name="phone" placeholder="Phone (optional)">
-          <select name="planning_timeframe" aria-label="Planning timeframe">
-            <option value="">Planning timeframe (optional)</option>
-            <option value="trying_now">Trying now</option>
-            <option value="0_6_months">0–6 months</option>
-            <option value="6_12_months">6–12 months</option>
-            <option value="gt_12_months">&gt;12 months</option>
-          </select>
+          <div class="field">
+            <label class="field-label" for="lead-phone">Phone <span>(optional)</span></label>
+            <input id="lead-phone" type="tel" name="phone" placeholder="Phone number" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label class="field-label" for="lead-timeframe">Planning timeframe <span>(optional)</span></label>
+            <select id="lead-timeframe" name="planning_timeframe">
+              <option value="">Select a timeframe</option>
+              <option value="trying_now">Trying now</option>
+              <option value="0_6_months">0–6 months</option>
+              <option value="6_12_months">6–12 months</option>
+              <option value="gt_12_months">&gt;12 months</option>
+            </select>
+          </div>
         </div>
 
         <div class="privacy-note" role="note">
@@ -63,6 +74,7 @@
           <button type="button" id="reset-btn" class="btn btn-secondary">Reset</button>
           <div id="lead-msg" class="lead-msg" aria-live="polite" style="margin-left:.5rem;color:var(--muted);"></div>
         </div>
+        <p id="submit-help" class="submit-help" aria-live="polite">Complete human verification to enable submission.</p>
 
         <!-- Hidden fields for tracking, filled by JS -->
         <input type="hidden" name="page" value="">
@@ -113,7 +125,14 @@
 
       // Disable submit until Turnstile passes
       function updateSubmitDisabled() {
-        submitBtn.disabled = !tokenInput.value;
+        const isDisabled = !tokenInput.value;
+        const submitHelp = document.getElementById('submit-help');
+        submitBtn.disabled = isDisabled;
+        if (submitHelp) {
+          submitHelp.textContent = isDisabled
+            ? 'Complete human verification to enable submission.'
+            : 'Verification complete. You can submit your form.';
+        }
       }
 
       // Called by Turnstile API once it loads (see script onload param)

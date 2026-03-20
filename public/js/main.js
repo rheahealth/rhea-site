@@ -82,10 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     accordionItems.forEach(item => {
       const header = item.querySelector('.accordion-header');
+      if (!header) return;
+
       header.addEventListener('click', () => {
         item.classList.toggle('active');
         const content = item.querySelector('.accordion-content');
-        if (item.classList.contains('active')) {
+        const isOpen = item.classList.contains('active');
+        header.setAttribute('aria-expanded', String(isOpen));
+
+        if (isOpen) {
           content.style.maxHeight = content.scrollHeight + 'px';
         } else {
           content.style.maxHeight = null;

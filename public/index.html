@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rhea Health - Preconception Genetic Screening</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -27,20 +26,23 @@
   <div class="steps">
 
     <div class="step">
+      <span class="step-badge" aria-hidden="true">01</span>
       <i class="fas fa-vial fa-2x step-icon"></i>
-      <strong>1. Easy Sample Collection</strong>
+      <strong>Easy Sample Collection</strong>
       <p>Choose between a quick buccal swab or a simple blood draw, depending on your preference and clinic setup.</p>
     </div>
 
     <div class="step">
+      <span class="step-badge" aria-hidden="true">02</span>
       <i class="fas fa-dna fa-2x step-icon"></i>
-      <strong>2. Certified Genetic Analysis</strong>
+      <strong>Certified Genetic Analysis</strong>
       <p>Your sample is processed in accredited laboratories using high-resolution genomic sequencing to deliver precise, reliable results.</p>
     </div>
 
     <div class="step">
+      <span class="step-badge" aria-hidden="true">03</span>
       <i class="fas fa-file-medical fa-2x step-icon"></i>
-      <strong>3. Clear Results & Guidance</strong>
+      <strong>Clear Results & Guidance</strong>
       <p>Receive an easy-to-understand report with personalized insights and next-step options — reviewed by certified genetic counselors.</p>
     </div>
 
@@ -50,48 +52,53 @@
   <section id="about" class="section">
     <h3>Backed by World-Class Science</h3>
     <p>Rhea Health is developed by researchers from Duke-NUS, A*STAR, and KK Women’s and Children’s Hospital—leaders in genetic science and reproductive health.</p>
+    <div class="social-proof" aria-label="Outcome highlights">
+      <div class="proof-item">
+        <strong>80+</strong>
+        <span>Genetic conditions screened</span>
+      </div>
+      <div class="proof-item">
+        <strong>3</strong>
+        <span>Leading institutions involved</span>
+      </div>
+      <div class="proof-item">
+        <strong>100%</strong>
+        <span>Report reviewed by qualified experts</span>
+      </div>
+    </div>
   </section>
 
   <section id="faq" class="section">
     <h3>Frequently Asked Questions</h3>
     <div class="accordion">
       <div class="accordion-item">
-        <div class="accordion-header">
-          <i class="fas fa-question-circle"></i>
+        <button class="accordion-header" type="button" aria-expanded="false">
           <strong>What is carrier screening?</strong>
           <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
+        </button>
         <div class="accordion-content">
           <p>Carrier screening checks if you carry genes that could affect your child’s health if both partners carry the same condition.</p>
         </div>
       </div>
       <div class="accordion-item">
-        <div class="accordion-header">
-          <i class="fas fa-question-circle"></i>
+        <button class="accordion-header" type="button" aria-expanded="false">
           <strong>When should I get screened?</strong>
           <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
+        </button>
         <div class="accordion-content">
           <p>Ideally before pregnancy, to allow time for informed decision-making and options.</p>
         </div>
       </div>
       <div class="accordion-item">
-        <div class="accordion-header">
-          <i class="fas fa-question-circle"></i>
+        <button class="accordion-header" type="button" aria-expanded="false">
           <strong>How accurate are the results?</strong>
           <i class="fas fa-chevron-down toggle-icon"></i>
-        </div>
+        </button>
         <div class="accordion-content">
           <p>Our technology provides high-resolution results with clinical-grade accuracy.</p>
         </div>
       </div>
     </div>
-  </section>
-
-  <section id="screening" class="section">
-    <h3>Get Screened</h3>
-    <p>Ready to take the next step? Begin your screening today or contact us to learn more about what’s right for you.</p>
-    <button class="btn btn-primary" onclick="location.href='screening.html'">Start Your Screening Journey</button>
   </section>
 
   <!-- Include footer -->
