@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms of Service - Rhea Health</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="section">
+    <section class="team">
+      <h2>Terms of Service</h2>
+      <p><em>Last updated: 13 April 2026</em></p>
+
+      <h3>1. About These Terms</h3>
+      <p>These Terms of Service ("Terms") govern your access to and use of the website located at myrheahealth.com (the "Site") and the preconception genetic carrier screening services offered by Rhea Health ("we", "us", "our"). By accessing the Site or submitting an enquiry, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
+
+      <h3>2. Our Services</h3>
+      <p>Rhea Health offers preconception carrier screening that analyses your genetic material for variants associated with approximately 80 inherited conditions. Our services include:</p>
+      <p>
+        - Sample collection coordination (buccal swab or blood draw)<br>
+        - Genomic analysis by accredited laboratory partners<br>
+        - A written screening report reviewed by certified genetic counsellors<br>
+        - Follow-up guidance and referrals as appropriate
+      </p>
+      <p>Our services are currently available to individuals in Singapore.</p>
+
+      <h3>3. Eligibility</h3>
+      <p>You must be at least 18 years of age to use our services or submit an enquiry through this Site. By proceeding, you confirm that you meet this requirement.</p>
+
+      <h3>4. Medical Disclaimer</h3>
+      <p><strong>Please read this section carefully.</strong></p>
+      <p>Rhea Health's carrier screening is a screening service — it is <strong>not a diagnostic test</strong> and does not constitute medical advice, a medical diagnosis, or a clinical assessment.</p>
+      <p>A "carrier" result means you carry one variant copy of a gene associated with a particular condition. Most carriers are healthy and do not develop the condition themselves; the clinical significance relates primarily to reproductive planning when both partners carry variants for the same condition.</p>
+      <p><strong>Limitations of screening:</strong></p>
+      <p>
+        - Our panel screens for approximately 80 conditions but does not cover all known genetic conditions or all variants within screened genes. A negative result does not eliminate the possibility of being a carrier for conditions not included in the panel, or for variants not detectable by our methodology.<br>
+        - No screening test achieves 100% sensitivity or specificity. Results should be interpreted in the context of your personal and family history.<br>
+        - Results are not intended to predict, diagnose, or rule out any medical condition in yourself or a future child.
+      </p>
+      <p><strong>What to do with your results:</strong></p>
+      <p>You should discuss your screening report with a qualified healthcare professional — such as your obstetrician, family physician, or a certified genetic counsellor — before making any reproductive or clinical decisions. Do not alter any medical treatment, medication, or health plan based solely on your screening results without consulting a doctor.</p>
+
+      <h3>5. Not a Substitute for Medical Care</h3>
+      <p>Nothing on this Site, in our reports, or in our communications constitutes professional medical advice. The information provided is for educational and informational purposes only. Always seek the advice of a qualified health provider with any questions you have regarding a medical condition or genetic concern.</p>
+
+      <h3>6. Your Responsibilities</h3>
+      <p>When using our services you agree to:</p>
+      <p>
+        - Provide accurate and complete information<br>
+        - Use the Site only for lawful purposes<br>
+        - Not misuse, copy, distribute, or reverse-engineer any part of the Site or reports<br>
+        - Keep your account and communication details up to date
+      </p>
+
+      <h3>7. Intellectual Property</h3>
+      <p>All content on this Site — including text, graphics, logos, and reports — is the property of Rhea Health or its licensors and is protected by Singapore copyright law. You may not reproduce, distribute, or create derivative works without our express written permission. Personal use of your own screening report is permitted.</p>
+
+      <h3>8. Third-Party Services</h3>
+      <p>Our Site uses third-party services including laboratory partners, cloud hosting, and security tools. These parties are bound by their own terms and data processing agreements. We are not responsible for the content, policies, or practices of third-party websites linked from our Site.</p>
+
+      <h3>9. Limitation of Liability</h3>
+      <p>To the fullest extent permitted by Singapore law:</p>
+      <p>
+        - We provide the Site and our services "as is" without warranties of any kind, express or implied.<br>
+        - We are not liable for any indirect, incidental, consequential, or punitive damages arising from your use of the Site or our services.<br>
+        - Our total liability to you for any claim arising out of or relating to these Terms or our services shall not exceed the amount you paid for the service giving rise to the claim.
+      </p>
+      <p>Nothing in these Terms excludes liability for death or personal injury caused by our negligence, fraud, or any other liability that cannot be excluded under applicable Singapore law.</p>
+
+      <h3>10. Indemnification</h3>
+      <p>You agree to indemnify and hold Rhea Health harmless from any claims, losses, or expenses (including reasonable legal fees) arising from your misuse of the Site, your violation of these Terms, or your infringement of any third-party rights.</p>
+
+      <h3>11. Privacy</h3>
+      <p>Our collection and use of your personal data is governed by our <a href="privacy.html">Privacy Notice</a>, which is incorporated into these Terms by reference.</p>
+
+      <h3>12. Amendments</h3>
+      <p>We may update these Terms from time to time. We will notify you of material changes by updating the "Last updated" date above. Continued use of the Site after changes are posted constitutes acceptance of the revised Terms.</p>
+
+      <h3>13. Governing Law and Dispute Resolution</h3>
+      <p>These Terms are governed by the laws of Singapore. Any dispute arising out of or in connection with these Terms shall first be referred to mediation in Singapore. If not resolved through mediation, disputes shall be submitted to the exclusive jurisdiction of the Singapore courts.</p>
+
+      <h3>14. Contact</h3>
+      <p>For questions about these Terms, contact us at <a href="mailto:privacy@myrheahealth.com">privacy@myrheahealth.com</a>.</p>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    (async function loadComponents(){
+      const h = document.getElementById('header-placeholder');
+      const f = document.getElementById('footer-placeholder');
+      if (h) h.innerHTML = await fetch('header.html').then(r=>r.text());
+      if (f) f.innerHTML = await fetch('footer.html').then(r=>r.text());
+    })();
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
