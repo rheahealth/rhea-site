@@ -3,6 +3,10 @@
 const ALLOWED_ORIGINS = new Set([
   "https://myrheahealth.com",
   "https://www.myrheahealth.com",
+  "http://localhost",
+  "http://127.0.0.1",
+  "http://localhost:8888",
+  "http://127.0.0.1:8888",
 ]);
 
 const ALLOWED_ORIGIN_SUFFIXES = [".netlify.app", ".netlify.live"];
@@ -18,13 +22,25 @@ function isAllowedOrigin(origin) {
   }
 }
 
+const ALLOWED_TURNSTILE_HOSTS = new Set([
+  "myrheahealth.com",
+  "www.myrheahealth.com",
+  "localhost",
+  "127.0.0.1",
+  "::1",
+]);
+
+function isAllowedTurnstileHost(host) {
+  return ALLOWED_TURNSTILE_HOSTS.has(host) || ALLOWED_ORIGIN_SUFFIXES.some(sfx => host.endsWith(sfx));
+}
+
 const json = (obj, status = 200, extraHeaders = {}) =>
   new Response(JSON.stringify(obj), {
     status,
     headers: { "Content-Type": "application/json", ...extraHeaders },
   });
 
-const MAX_LENGTHS = { first_name: 100, phone: 30, planning_timeframe: 50, page: 300, referrer: 500, utm_source: 100, utm_medium: 100, utm_campaign: 100 };
+const MAX_LENGTHS = { first_name: 100, phone: 30, page: 300, referrer: 500, utm_source: 100, utm_medium: 100, utm_campaign: 100 };
 
 function clamp(val, max) {
   return typeof val === "string" ? val.slice(0, max) : null;
@@ -32,18 +48,22 @@ function clamp(val, max) {
 
 export default async (request, context) => {
   const origin = request.headers.get("Origin") || "";
-  const allowed = isAllowedOrigin(origin);
-  const corsOrigin = allowed ? origin : (context.site?.url || "");
-  const cors = allowed
-    ? { "Access-Control-Allow-Origin": corsOrigin, Vary: "Origin" }
-    : { Vary: "Origin" };
+
+  // If an Origin header is present, it must be on the allowlist.
+  // Requests with no Origin header (e.g. server-to-server) are allowed through.
+  if (origin && !isAllowedOrigin(origin)) {
+    return json({ error: "Forbidden" }, 403);
+  }
+
+  const cors = origin
+    ? { "Access-Control-Allow-Origin": origin, Vary: "Origin" }
+    : {};
 
   if (request.method === "OPTIONS") {
-    if (!allowed) return new Response(null, { status: 403 });
     return new Response(null, {
       status: 204,
       headers: {
-        "Access-Control-Allow-Origin": corsOrigin,
+        "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         Vary: "Origin",
@@ -99,19 +119,8 @@ export default async (request, context) => {
     if (!verifyResp.ok || !verifyData.success) {
       return json({ error: "Verification failed" }, 400, cors);
     }
-    // Hostname check to reduce abuse (must be present and match)
     const verifiedHost = (verifyData.hostname || "").toLowerCase();
-    const allowedExact = new Set([
-      "myrheahealth.com",
-      "www.myrheahealth.com",
-      "localhost",
-      "127.0.0.1",
-      "::1",
-    ]);
-    const allowedSuffixes = [".netlify.app", ".netlify.live"];
-    const isAllowed = (h) =>
-      allowedExact.has(h) || allowedSuffixes.some(sfx => h.endsWith(sfx));
-    if (!verifiedHost || !isAllowed(verifiedHost)) {
+    if (!verifiedHost || !isAllowedTurnstileHost(verifiedHost)) {
       return json({ error: "Invalid verification host" }, 400, cors);
     }
   } catch {
