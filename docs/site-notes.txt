@@ -1,0 +1,57 @@
+Rhea Health website (static)
+============================
+
+Contents
+  index.html               Main page (for couples)
+  clinicians.html          Page for clinicians
+  robots.txt, sitemap.xml  For search engines
+  llms.txt                 Summary for AI assistants
+  assets/css/styles.css    Styles
+  assets/fonts/            Nunito Sans, self-hosted (SIL Open Font License, see OFL-LICENSE.txt)
+  assets/img/              Rhea Health logos, favicon and illustrations
+
+The site makes no third-party requests: fonts, logos and images are all
+served from the site itself. The only external links are the references,
+which open only when a visitor clicks them.
+
+To publish
+  Upload the whole "rhea-health-website" folder (keep the folder structure)
+  to any static web host. No build step or server code is needed.
+
+  - Netlify: drag the folder onto app.netlify.com/drop
+  - Cloudflare Pages / Vercel / GitHub Pages: upload the folder as the site root
+  - Existing host (cPanel etc.): upload the files to the web root
+
+  Then point myrheahealth.com at the new site in your domain settings, and keep
+  carrierscreening.sg as a permanent (301) redirect to https://myrheahealth.com/.
+
+Before launch, the developer should
+  - Confirm the Privacy and Terms address. Both pages link to /privacy-and-terms;
+    change the two footer links if the page lives elsewhere.
+  - Set a permanent (301) redirect from the old For Clinicians page address to
+    /clinicians.html, so existing links keep working.
+  - Keep the existing Privacy and Terms page, and check it matches the FAQ text
+    on how results are shared.
+
+Confirmed before launch (November 2026)
+  - Written authorisation from LifeStrands Genomics for Rhea Health to advertise the test
+  - Validation data supporting the >95% sensitivity and specificity figure
+  - Both panels include conditions relevant to Asian populations
+  - Thalassaemia, SMA and citrin deficiency are on both panels
+  - Data-handling text matches how results are shared and stored
+
+Search and AI assistants
+  - The site is set up to live at https://myrheahealth.com/ . If the address
+    changes, replace it in index.html (canonical, og:url, og:image, structured
+    data), robots.txt, sitemap.xml and llms.txt.
+  - After launch, add the site to Google Search Console and Bing Webmaster Tools
+    and submit sitemap.xml.
+  - llms.txt is a plain-text summary for AI assistants. Keep it in step with the page.
+
+When updating the page
+  - Change the "Page last updated" date in the footer, the lastmod date in
+    sitemap.xml, "lastReviewed" in the structured data, and the date in llms.txt.
+  - If you change an FAQ answer, update the matching text in the structured data
+    (the <script type="application/ld+json"> block in index.html).
+  - Keep claims factual and sourced, in line with the Healthcare Services
+    (Advertisement) Regulations 2021.

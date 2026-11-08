@@ -2,9 +2,31 @@
   publish = "public"
   command = ""
 
-[[edge_functions]]
-  path = "/api/lead"
-  function = "lead"
+# Old page addresses from the previous site
+[[redirects]]
+  from = "/for_clinicians.html"
+  to = "/clinicians.html"
+  status = 301
+
+[[redirects]]
+  from = "/screening.html"
+  to = "/#get-tested"
+  status = 301
+
+[[redirects]]
+  from = "/meet_the_team.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/privacy.html"
+  to = "/privacy-and-terms#privacy"
+  status = 301
+
+[[redirects]]
+  from = "/terms.html"
+  to = "/privacy-and-terms#terms"
+  status = 301
 
 [[headers]]
   for = "/*"
@@ -14,4 +36,4 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data:; frame-src https://challenges.cloudflare.com https://app.netlify.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; frame-src 'none'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
