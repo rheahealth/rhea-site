@@ -1,0 +1,33 @@
+# Rhea Health: RheaStrands expanded carrier screening
+
+> RheaStrands is an expanded carrier screening test by Rhea Health, developed in partnership with LifeStrands Genomics Pte. Ltd. It shows whether a couple is at risk of having a child with a serious recessive condition, so they can make informed choices about their family. RheaStrands is optimised for Asian populations.
+
+## Key facts
+- Two panels: RheaStrands Essential (10 conditions) and RheaStrands Premium (110 conditions). Both cover severe recessive conditions that start in early childhood, chosen for relevance to people of Chinese, Malay, Indian and other Asian ancestries.
+- Examples of conditions on both panels: thalassaemia (about 1 in 22 Singaporeans are carriers), spinal muscular atrophy (about 1 in 50 are carriers) and citrin deficiency (about 1 in 44 Chinese are carriers).
+- In a Singapore screening programme, 1 in 114 couples screened were found to be at risk of having a child with a serious recessive condition (Bylstra et al., BMC Medicine, 2026).
+- Most families with an affected child have no family history of the condition.
+- If both partners carry a change in the same gene, each pregnancy has a 1 in 4 chance of an affected child.
+- Sample: blood sample or cheek swab. People can be tested individually or as a couple; testing both partners is preferred.
+- Testing is performed at an MOH-licensed laboratory in Singapore (LifeStrands Genomics). Results are ready within 4 weeks and are explained by the healthcare provider who arranged the test.
+- The laboratory reports sensitivity and specificity of >95% for the variants on these panels.
+- Limits: a negative result greatly lowers, but does not remove, the chance of an affected child. The panels cover selected conditions only, and carrier screening is not a diagnostic test.
+- Insurance: under the Moratorium on Genetic Testing and Insurance (MOH and the Life Insurance Association), insurers cannot require a genetic test, and cannot ask for or use carrier screening results when someone applies for insurance.
+
+## Pages
+- [Home page](https://myrheahealth.com/): information for couples, FAQ and references
+- [For clinicians](https://myrheahealth.com/clinicians.html): panels, specimens, turnaround, performance, counselling, limitations and ordering
+
+## Contact
+- Enquiries: enquiries@myrheahealth.com
+- How to get tested: ask your doctor or healthcare provider, who can arrange pre-test genetic counselling and testing.
+
+## References
+- [Bylstra Y, et al. Implementing reproductive carrier screening to include diverse Asian populations: insights from Singapore. BMC Medicine, 2026](https://doi.org/10.1186/s12916-026-05286-w)
+- [Chan SH, et al. Analysis of clinically relevant variants from ancestrally diverse Asian genomes. Nature Communications, 2022](https://www.nature.com/articles/s41467-022-34116-9)
+- [Expanding carrier screening: beyond the genes, to include underrepresented ancestries. npj Genomic Medicine, 2025](https://doi.org/10.1038/s41525-025-00545-w)
+- [Health Promotion Board. Thalassaemia](https://www.sgh.com.sg/symptoms-treatments/thalassaemia-childhood-illnesses)
+- [Mayo Clinic Health System. Carrier screening for family planning, 2023](https://mayoclinichealthsystem.org/hometown-health/speaking-of-health/carrier-screening-for-family-planning)
+- [Ministry of Health. Moratorium on Genetic Testing and Insurance](https://www.moh.gov.sg/others/resources-and-statistics/moratorium-on-genetic-testing-and-insurance/)
+
+Last updated: 2026-11-08
