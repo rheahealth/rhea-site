@@ -178,8 +178,35 @@ sup.tm { font-size: 0.5em; vertical-align: super; line-height: 0; letter-spacing
   .section { padding: 56px 0; }
   .hero .wrap { padding-top: 48px; padding-bottom: 48px; gap: 32px; }
   .site-header { position: static; }
-  .nav { gap: 2px 16px; font-size: 14px; }
   .stat-card__num { font-size: 44px; }
+
+  /* Header: smaller logo, menu on one line that scrolls sideways */
+  .site-header .wrap { padding-top: 10px; padding-bottom: 4px; gap: 4px; }
+  .brand img { height: 40px; }
+  .nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+         width: calc(100% + 48px); margin: 0 -24px; padding: 0 24px; gap: 0 20px; font-size: 15px;
+         -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; padding: 10px 0; }
+  .nav a:last-child { padding-right: 32px; }
+
+  /* Hero buttons full width */
+  .buttons .btn { flex: 1 1 100%; justify-content: center; }
+
+  /* Panel cards: keep "110 conditions" on one line */
+  .tier__num { font-size: 34px; }
+
+  /* Easier to tap */
+  .faq summary { padding: 8px 0; }
+  .footer-links a { display: inline-block; padding: 10px 0; }
+  .odds li { font-size: 14px; }
+
+  /* Clinicians table: label above value instead of side by side */
+  .facts, .facts tbody, .facts tr, .facts th, .facts td { display: block; width: 100%; }
+  .facts th { padding: 14px 18px 4px; border-bottom: 0; background: none; }
+  .facts td { padding: 0 18px 14px; }
+  .facts tr { border-bottom: 1px solid var(--line); }
+  .facts tr:last-child { border-bottom: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
