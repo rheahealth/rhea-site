@@ -71,6 +71,12 @@ sup.tm { font-size: 0.5em; vertical-align: super; line-height: 0; letter-spacing
 .nav { display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 15px; font-weight: 700; }
 .nav a { color: var(--navy); text-decoration: none; padding: 6px 0; }
 .nav a:hover { color: var(--blue); }
+.menu-toggle { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; margin-right: -10px;
+               border: 0; border-radius: 10px; background: none; color: var(--navy); cursor: pointer; }
+.menu-toggle:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.menu-toggle path { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.menu-toggle .cross, .menu-open .menu-toggle .bars { display: none; }
+.menu-open .menu-toggle .cross { display: inline; }
 
 /* Hero */
 .hero { background: var(--navy); color: #FFFFFF; }
@@ -180,15 +186,28 @@ sup.tm { font-size: 0.5em; vertical-align: super; line-height: 0; letter-spacing
   .site-header { position: static; }
   .stat-card__num { font-size: 44px; }
 
-  /* Header: smaller logo, menu on one line that scrolls sideways */
+  /* Header: smaller logo */
   .site-header .wrap { padding-top: 10px; padding-bottom: 4px; gap: 4px; }
   .brand img { height: 40px; }
-  .nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+
+  /* Without JavaScript: menu on one line that scrolls sideways */
+  html:not(.js) .nav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
          width: calc(100% + 48px); margin: 0 -24px; padding: 0 24px; gap: 0 20px; font-size: 15px;
          -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
-  .nav::-webkit-scrollbar { display: none; }
-  .nav a { white-space: nowrap; padding: 10px 0; }
-  .nav a:last-child { padding-right: 32px; }
+  html:not(.js) .nav::-webkit-scrollbar { display: none; }
+  html:not(.js) .nav a { white-space: nowrap; padding: 10px 0; }
+  html:not(.js) .nav a:last-child { padding-right: 32px; }
+
+  /* With JavaScript: compact header pinned to the top, menu behind a button */
+  html.js .site-header { position: sticky; }
+  html.js .site-header .wrap { padding-top: 8px; padding-bottom: 8px; }
+  html.js .menu-toggle:not([hidden]) { display: inline-flex; }
+  html.js .nav { display: none; }
+  html.js .menu-open .nav { display: flex; flex-direction: column; flex-wrap: nowrap; width: 100%; gap: 0;
+         padding: 4px 0 8px; border-top: 1px solid var(--line); max-height: calc(100vh - 64px); overflow-y: auto; }
+  html.js .menu-open .nav a { padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 17px; }
+  html.js .menu-open .nav a:last-child { border-bottom: 0; }
+  html.js [id] { scroll-margin-top: 72px; }
 
   /* Hero buttons full width */
   .buttons .btn { flex: 1 1 100%; justify-content: center; }

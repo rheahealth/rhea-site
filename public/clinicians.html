@@ -23,6 +23,7 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/nunito-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/styles.css">
+<script src="assets/js/menu.js"></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -43,7 +44,8 @@
 <header class="site-header">
 <div class="wrap">
 <a class="brand" href="index.html"><img src="assets/img/rhea-logo-colour.svg" alt="Rhea Health home" width="126" height="48"></a>
-<nav class="nav" aria-label="Main">
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu" hidden><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path class="bars" d="M3 6h18M3 12h18M3 18h18"/><path class="cross" d="M5 5l14 14M19 5L5 19"/></svg></button>
+<nav class="nav" id="site-nav" aria-label="Main">
 <a href="index.html">For couples</a>
 <a href="#overview">Overview</a>
 <a href="#panels">Panels</a>
